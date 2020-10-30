@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  rdkit-keras-lab:
+container_name: rdkit-keras-container
+    labels:
+      description: rdkit-keras, Jupyter lab for Container-Optimized OS from Google (NVIDIA)
+      name: rdkit-keras-docker
+    volumes:
+      - ./notebooks:/root/notebooks
+      - ./data:/root/data
+      - ./models:/root/models
+      - ./dataset:/root/dataset
+      - ./result:/root/result
+      - /var/lib/nvidia/lib64:/usr/local/nvidia/lib64
+      - /var/lib/nvidia/bin:/usr/local/nvidia/bin
+    ports:
+      - '8800:8888'
+    restart: always
+    environment:
+      JUPYTER_ENABLE_LAB: 'yes'
+      GRANT_SUDO: 'yes'
+    user:
+     "root"
+    devices:
+          - "/dev/nvidia0:/dev/nvidia0"
+          - "/dev/nvidia-uvm:/dev/nvidia-uvm"
+          - "/dev/nvidiactl:/dev/nvidiactl"
+    build: ./

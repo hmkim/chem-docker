@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  rdkit-keras-lab:
+    container_name: rdkit-keras-container
+    labels:
+      description: rdkit-keras, tensorflow, jupyter lab for legacy server (NVIDIA)
+      name: rdkit-keras-docker
+    volumes:
+      - ./notebooks:/root/notebooks
+      - ./data:/root/data
+      - ./models:/root/models
+      - ./dataset:/root/dataset
+      - ./result:/root/result
+    ports:
+      - '8800:8888'
+    restart: always
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    environment:
+      JUPYTER_ENABLE_LAB: 'yes'
+      GRANT_SUDO: 'yes'
+    user:
+     "root"
+    build: ./
